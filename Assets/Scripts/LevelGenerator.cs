@@ -56,6 +56,7 @@ public class LevelGenerator : MonoBehaviour {
 						Enemy e = enemy.GetComponent<Enemy>();
 						e.ourGenerator = this;
 						enemies.Add(e);
+						e.ourPos = new Vector2(x,y);
 						spawnedOrc = true;
 					}
 					GameObject newTile = GameObject.Instantiate(wallPrefab, new Vector3 (x * padding, y * padding, 0), Quaternion.identity) as GameObject;
@@ -88,12 +89,13 @@ public class LevelGenerator : MonoBehaviour {
 
 	public bool TileCheck(Vector2 desiredPos)
 	{
+		Debug.Log ("CHECKING " + desiredPos.ToString ());
 		if (tiles [(int)desiredPos.x, (int)desiredPos.y].isExit) {
 			Debug.Log ("YOUR WINNER");
 			Reset();
 			return true;
 		} else if (tiles [(int)desiredPos.x, (int)desiredPos.y].isWalkable) {
-			UpdateEnemies();
+
 			return true;
 		} else {
 			return false;
@@ -104,6 +106,22 @@ public class LevelGenerator : MonoBehaviour {
 	{
 		foreach (Enemy enemy in enemies) {
 			enemy.Move();
+		}
+	}
+
+	public void CheckForKills(Vector2 pos)
+	{
+		Enemy toKill = null;
+
+		foreach (Enemy enemy in enemies) {
+			if(enemy.ourPos == pos)
+			{
+				toKill = enemy;
+			}
+		}
+		if (toKill != null) {
+			enemies.Remove(toKill);
+			Destroy(toKill.gameObject);
 		}
 	}
 

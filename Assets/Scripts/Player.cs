@@ -23,6 +23,8 @@ public class Player : MonoBehaviour {
 				newPos.y += tileSize;
 				this.transform.position = newPos;
 				ourPos.y += 1;
+				ourGenerator.CheckForKills(new Vector2(ourPos.x, ourPos.y +1));
+				ourGenerator.UpdateEnemies();
 			}
 		}
 		else if (Input.GetKeyDown (KeyCode.S)) {
@@ -31,6 +33,8 @@ public class Player : MonoBehaviour {
 				newPos.y -= tileSize;
 				this.transform.position = newPos;
 				ourPos.y -=1;
+				ourGenerator.CheckForKills(new Vector2(ourPos.x, ourPos.y -1));
+				ourGenerator.UpdateEnemies();
 			}
 		}
 		else if (Input.GetKeyDown (KeyCode.A)) {
@@ -40,6 +44,8 @@ public class Player : MonoBehaviour {
 				ourPos.x -= 1;
 				newPos.x -= tileSize;
 				this.transform.position = newPos;
+				ourGenerator.CheckForKills(new Vector2(ourPos.x -1, ourPos.y));
+				ourGenerator.UpdateEnemies();
 			}
 		}
 		else if (Input.GetKeyDown (KeyCode.D)) {
@@ -48,6 +54,8 @@ public class Player : MonoBehaviour {
 				ourPos.x += 1;
 				newPos.x += tileSize;
 				this.transform.position = newPos;
+				ourGenerator.CheckForKills(new Vector2(ourPos.x +1, ourPos.y));
+				ourGenerator.UpdateEnemies();
 			}
 		}
 
